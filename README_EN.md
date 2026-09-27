@@ -11,10 +11,6 @@ and manage multi-device connections without opening the phone app.
 Huawei FreeBuds, Xiaomi / Redmi, Edifier, and Apple AirPods. Capabilities are auto-detected per model — the UI
 only shows what your earbuds actually support.
 
-> **v2.0.0 beta**: the app is currently undergoing a multi-brand refactor. See
-> [Supported Brands & Devices](#supported-brands--devices) for per-brand progress.
-> Join our QQ group **1101564539** to try the beta builds.
-
 ---
 
 ## Table of Contents
@@ -81,17 +77,18 @@ only shows what your earbuds actually support.
 
 | Brand | Model detection | Coverage |
 |-------|----------------|----------|
-| **OPPO** · **OnePlus** · **realme** | 135 official models | Full: battery / ANC / sound / spatial audio / dual-device / find-my-earbuds |
-| **vivo** · **iQOO** | 43 official models | Full: battery / ANC / sound / spatial audio / dual-device |
-| **Huawei FreeBuds** | Per-model capability table | Adopted: battery / ANC / dual-device, shown per model |
-| **Xiaomi** · **Redmi** | — | Battery read-out (controls pending) |
-| **Edifier** | — | Basic info read-out |
-| **Apple AirPods** | — | Basic info read-out (control channel not implemented on desktop) |
+| **OPPO** · **OnePlus** · **realme** | 135 official models | Mostly: battery / ANC / sound / spatial audio / dual-device / find-my-earbuds |
+| **vivo** · **iQOO** | 43 official models | Mostly: battery / ANC / sound / spatial audio / dual-device |
+| **Huawei FreeBuds** | Per-model capability table | Mostly: battery / ANC / dual-device, shown per model |
+| **Xiaomi** · **Redmi** | — | Preliminary: battery read-out (controls pending) |
+| **Edifier** | — | Preliminary: basic info read-out |
+| **Apple AirPods** | — | Preliminary: basic info read-out (control channel not implemented on desktop) |
 
 Features vary by model (ANC sub-levels, spatial audio, dual-device, Master EQ, etc.). The app
 **shows only what your model supports** — unsupported features never appear. If auto-detection is wrong,
 search and pick your model under **Settings → Device Model**.
 
+> This is a community reverse-engineering project; perfect adaptation or full functionality for every device is not guaranteed.
 > Model tables are synced from the official apps and updated with each release.
 
 ---
@@ -101,8 +98,7 @@ search and pick your model under **Settings → Device Model**.
 - **Windows**: Windows 10 version 2004 (build 19041) or later, 64-bit (x64 / arm64)
 - **Linux**: x64, BlueZ via D-Bus (X11 / XWayland), plus `bluetoothctl` and `libbluetooth`
 - **Hardware**: Bluetooth adapter + paired earbuds
-- **Dependencies**: Windows self-contained builds need nothing installed. Linux needs the .NET Runtime 10.0
-  unless you use a self-contained build.
+- **Dependencies**: Self-contained (NativeAOT) builds are ready to use with no .NET install. Framework-dependent builds require the .NET Runtime 10.0.
 
 ---
 
@@ -241,10 +237,8 @@ According to MiSans’ official statements, this project specifies the use of th
 
 ## Acknowledgements
 
-- [Avalonia UI](https://avaloniaui.net/) — Cross-platform UI framework
-- [SukiUI](https://github.com/kikipoulet/SukiUI) — Avalonia theme & control library
-- [Leaf-lsgtky/OppoPods](https://github.com/Leaf-lsgtky/OppoPods) — OPPO proprietary protocol reverse engineering
-- [1812z/OppoPods](https://github.com/1812z/OppoPods) — Feature implementation reference
+For the open-source projects and protocol references actually used while adapting each brand, see
+[ACKNOWLEDGEMENTS_EN.md](./ACKNOWLEDGEMENTS_EN.md).
 
 ---
 
