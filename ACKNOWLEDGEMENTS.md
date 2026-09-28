@@ -24,5 +24,3 @@
   - [silverpoetry/HyperEars](https://github.com/silverpoetry/HyperEars)
   - [Star-ZER0/Pods-Protocol-Reverse-Engineering](https://github.com/Star-ZER0/Pods-Protocol-Reverse-Engineering)
   - [librepods-org/librepods](https://github.com/librepods-org/librepods)
-
-> vivo / iQOO 适配基于官方 App 的 Windows 端逆向（型号画像 GAIA 版本、噪声 SET 后缀等），相关实现已并入本项目代码，未单独引用外部仓库。
