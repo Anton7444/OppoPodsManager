@@ -280,9 +280,61 @@ internal sealed class HuaweiManager : IBrandManager
         }
         return Task.FromResult(false);
     }
-    public Task<bool> SetSpatialAudioAsync(SpatialAudioMode mode, CancellationToken cancellationToken) => Task.FromResult(false);
-    public Task<bool> SetSpatialAudioByKeyAsync(string modeKey, CancellationToken cancellationToken) => Task.FromResult(false);
-    public Task<bool> SetFindDeviceAsync(bool enabled, CancellationToken cancellationToken) => Task.FromResult(false);
+    // ---- 空间音频（MBB 专属；5.43.58-5A）----
+    // 仅当型号声明 SupportsSpatialAudio 且协议为 Mbb 时生效；TLV 语义基于 5.43.x 语义假设（Off=0/Fixed=1/HeadTracking=2），
+    // 真实字段顺序/长度待真机或 jadx 源码确认，故默认所有型号关闭，开启后需真机验证。
+    public async Task<bool> SetSpatialAudioAsync(SpatialAudioMode mode, CancellationToken cancellationToken)
+    {
+        if (_link is null || !_capabilities.SupportsSpatialAudio || _capabilities.PreferredProtocol != HuaweiProtocol.Mbb)
+            return false;
+        try
+        {
+            var modeByte = mode switch
+            {
+                SpatialAudioMode.Fixed => (byte)0x01,
+                SpatialAudioMode.HeadTracking => (byte)0x02,
+                _ => (byte)0x00,
+            };
+            ApplicationLog.Current?.Info("Huawei",
+                $"空间音频 TLV 尚未真机验证（假设 0x01=Fixed/0x02=HeadTracking），下发 S43 C58 mode={modeByte}。");
+            // S43 C58：空间音效数据上报开关设置。TLV (1, mode)。
+            await _link.SendFireAndForgetAsync(HuaweiConstants.SetSpatialAudio,
+                new byte[] { 0x01, 0x01, modeByte }, cancellationToken);
+            _state.SetSpatialAudio(new SpatialAudioSnapshot(mode));
+            _state.NotifyChanged();
+            return true;
+        }
+        catch (Exception exception)
+        {
+            ApplicationLog.Current?.Error("Huawei", $"设置空间音频失败：{exception.Message}", exception);
+            return false;
+        }
+    }
+
+    public Task<bool> SetSpatialAudioByKeyAsync(string modeKey, CancellationToken cancellationToken)
+        => SetSpatialAudioAsync(SpatialAudio.ParseMode(modeKey), cancellationToken);
+
+    // ---- 本地查找耳机（MBB 专属；5.43.5D/5E）----
+    // 仅当型号声明 SupportsFindDevice 且协议为 Mbb 时生效；TLV 语义待真机验证，默认关闭。
+    public async Task<bool> SetFindDeviceAsync(bool enabled, CancellationToken cancellationToken)
+    {
+        if (_link is null || !_capabilities.SupportsFindDevice || _capabilities.PreferredProtocol != HuaweiProtocol.Mbb)
+            return false;
+        try
+        {
+            ApplicationLog.Current?.Info("Huawei",
+                "查找耳机 TLV 尚未真机验证，下发 S43 C5D enabled=" + enabled + "。");
+            // S43 C5D：本地查找耳机-响铃状态设置。TLV (1, 0/1)。
+            await _link.SendFireAndForgetAsync(HuaweiConstants.SetFindDevice,
+                new byte[] { 0x01, 0x01, enabled ? (byte)0x01 : (byte)0x00 }, cancellationToken);
+            return true;
+        }
+        catch (Exception exception)
+        {
+            ApplicationLog.Current?.Error("Huawei", $"设置查找耳机失败：{exception.Message}", exception);
+            return false;
+        }
+    }
     public async Task<bool> RefreshMultiDeviceAsync(CancellationToken cancellationToken)
     {
         if (_link is null || !_capabilities.SupportsDualConnect)

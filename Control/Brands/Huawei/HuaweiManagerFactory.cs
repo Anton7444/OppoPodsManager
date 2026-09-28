@@ -20,7 +20,9 @@ public sealed class HuaweiManagerFactory : IBrandManagerFactory
         IRawConnection connection,
         CancellationToken cancellationToken)
     {
-        var link = new ConnectionLink(connection, new HuaweiFrameCodec(), new FrameRouter());
+        var protocol = HuaweiModels.GetCapabilities(HuaweiModels.DetectRoute(plan.Candidate.DisplayName)).PreferredProtocol;
+        IFrameCodec codec = protocol == HuaweiProtocol.Mbb ? new MbbFrameCodec() : new HuaweiFrameCodec();
+        var link = new ConnectionLink(connection, codec, new FrameRouter());
         var manager = new HuaweiManager();
         try
         {

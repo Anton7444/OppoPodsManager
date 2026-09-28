@@ -118,4 +118,16 @@ public static class HuaweiConstants
     // FreeBuds 6i 通透默认子模式 0x02，其余型号 0xFF。
     public const byte TransparencyDefault6i = 0x02;
 
+    // ---- 空间音效 / 空间音频（service 43 = INTELLIGENT，仅 MBB 线制支持）----
+    // 来源：MBB 逆向 mbb_command_list（5.43.58/59/5A）。TLV 字段语义待真机/源码提取。
+    // 数据上报开关设置 S43 C58、数据上报查询 S43 C59、能力查询 S43 C5A。
+    public const ushort SetSpatialAudio = 0x4358;
+    public const ushort QuerySpatialAudio = 0x4359;
+    public const ushort SpatialAudioCapability = 0x435A;
+
+    // ---- 本地查找耳机（service 43，仅 MBB 线制支持）----
+    // 来源：MBB 逆向 mbb_command_list（5.43.5D/5E）。响铃状态设置 S43 C5D、能力/状态查询 S43 C5E。
+    public const ushort SetFindDevice = 0x435D;
+    public const ushort QueryFindDevice = 0x435E;
+
 }

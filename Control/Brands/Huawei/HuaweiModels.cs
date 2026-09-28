@@ -58,7 +58,15 @@ public sealed record HuaweiCapabilities(
     bool SupportsInEarState = false,
     // 首选 SPP 通道（0=走 SDP 端口 0 解析；非 0=该型号控制服务固定在指定 RFCOMM 通道，
     // 参考 OpenFreebuds per_model 的 _spp_service_port：6i/Pro/Pro2/Pro3/Pro5/SE2/SE4/Studio/FreeClip2/LacePro2=1）。
-    byte PreferredSppChannel = 0)
+    byte PreferredSppChannel = 0,
+    // ---- MBB 线制（逆向 base.apk 还原）----
+    // 协议变体：默认 Legacy（现有全部型号走老 FreeBuds/OpenFreebuds 线制）。
+    // 新 HarmonyOS 设备若只讲 MBB，将此处置 HuaweiProtocol.Mbb 即启用 MbbFrameCodec。
+    HuaweiProtocol PreferredProtocol = HuaweiProtocol.Legacy,
+    // 空间音效/空间音频（5.43.58-5A）：接口已预留，默认关，待 TLV 语义提取后按型号开启。
+    bool SupportsSpatialAudio = false,
+    // 本地查找耳机（5.43.5D/5E）：同上。
+    bool SupportsFindDevice = false)
 {
     public static HuaweiCapabilities Unknown { get; } = new("HUAWEI TWS",
         SupportsAnc: false, SupportsTransparency: false, SupportsAncStateReadback: false,
