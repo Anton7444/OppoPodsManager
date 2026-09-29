@@ -223,9 +223,6 @@
       <Button x:Name="DialogSkipBtn" Content="{l10n:Translate Dialog_SkipVersion}"
           Height="28" FontSize="13" Padding="14,0" Margin="0,0,8,8"
           IsVisible="False" Click="DialogSkip_Click"/>
-      <Button x:Name="DialogMirrorBtn" Content="{l10n:Translate Dialog_MirrorDownload}"
-          Height="28" FontSize="13" Padding="14,0" Margin="0,0,8,8"
-          IsVisible="False" Click="DialogMirror_Click"/>
       <Button x:Name="DialogConfirmBtn" Content="{l10n:Translate Dialog_Save}"
           Height="28" FontSize="13" Padding="14,0" Margin="0,0,8,8" IsDefault="True"
           Click="DialogConfirm_Click"/>

@@ -99,7 +99,7 @@ internal sealed class MbbFrameCodec : IFrameCodec
                 _buffer.RemoveRange(0, frameSize);
                 if (ctrl == 3)
                 {
-                    frames.Add(new ProtocolFrame(command, [.. acc]));
+                    frames.Add(new ProtocolFrame(command, acc.ToArray()));
                     _fragments.Remove(fsn);
                 }
             }

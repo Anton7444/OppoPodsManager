@@ -31,6 +31,5 @@ global using OppoPodsManager.Control.Brands.Oppo.Models;
 global using OppoPodsManager.Control.Core.Models;
 global using OppoPodsManager.Control.Core.Transport;
 global using OppoPodsManager.Control.Core.Features;
-global using OppoPodsManager.Control.Subsystems.Updates;
 global using OppoPodsManager.UI.Toast;
 global using OppoPodsManager.UI.Views;

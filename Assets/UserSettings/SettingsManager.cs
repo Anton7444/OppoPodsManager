@@ -114,7 +114,6 @@ public sealed record AppSettings(
     string Language,
     bool MinimizeToTray,
     bool StartWithWindows,
-    bool AutomaticUpdateChecks,
     int CardOpacity,
     int ToastDurationSeconds,
     Dictionary<string, string> ModelOverrides,
@@ -136,7 +135,6 @@ public sealed record AppSettings(
     public bool LowBatteryToastEnabled { get; init; } = true;
     public bool ConnectionToastEnabled { get; init; } = true;
     public List<string> BackgroundHistory { get; init; } = [];
-    public string SkippedVersion { get; init; } = string.Empty;
 
     public static AppSettings Default { get; } = new(
         "System",
@@ -145,7 +143,6 @@ public sealed record AppSettings(
         "",
         true,
         false,
-        true,
         50,
         5,
         new Dictionary<string, string>(),

@@ -160,13 +160,10 @@ public sealed class LanguageManager
     public IObservable<string?> Dialog_FeedbackExported => Text(nameof(Dialog_FeedbackExported));
     public IObservable<string?> Dialog_FeedbackMessage => Text(nameof(Dialog_FeedbackMessage));
     public IObservable<string?> Dialog_FeedbackTitle => Text(nameof(Dialog_FeedbackTitle));
-    public IObservable<string?> Dialog_GitHubDownload => Text(nameof(Dialog_GitHubDownload));
     public IObservable<string?> Dialog_InputPresetName => Text(nameof(Dialog_InputPresetName));
     public IObservable<string?> Dialog_InvalidName => Text(nameof(Dialog_InvalidName));
     public IObservable<string?> Dialog_InvalidNameTitle => Text(nameof(Dialog_InvalidNameTitle));
-    public IObservable<string?> Dialog_MirrorDownload => Text(nameof(Dialog_MirrorDownload));
     public IObservable<string?> Dialog_OK => Text(nameof(Dialog_OK));
-    public IObservable<string?> Dialog_RemindLater => Text(nameof(Dialog_RemindLater));
     public IObservable<string?> Dialog_Save => Text(nameof(Dialog_Save));
     public IObservable<string?> Dialog_SkipVersion => Text(nameof(Dialog_SkipVersion));
     public IObservable<string?> Eq_DeleteConfirm => Text(nameof(Eq_DeleteConfirm));
@@ -208,9 +205,8 @@ public sealed class LanguageManager
     public IObservable<string?> Personal_LanguageAuto => Text(nameof(Personal_LanguageAuto));
     public IObservable<string?> Settings_AllModels => Text(nameof(Settings_AllModels));
     public IObservable<string?> Settings_AllSeries => Text(nameof(Settings_AllSeries));
+    public IObservable<string?> Settings_GetUpdate => Text(nameof(Settings_GetUpdate));
     public IObservable<string?> Settings_AutoDetect => Text(nameof(Settings_AutoDetect));
-    public IObservable<string?> Settings_Checking => Text(nameof(Settings_Checking));
-    public IObservable<string?> Settings_CheckUpdate => Text(nameof(Settings_CheckUpdate));
     public IObservable<string?> Settings_ModelAutoDetected => Text(nameof(Settings_ModelAutoDetected));
     public IObservable<string?> Settings_ModelManualSet => Text(nameof(Settings_ModelManualSet));
     public IObservable<string?> Settings_RestoreHiddenDevices => Text(nameof(Settings_RestoreHiddenDevices));
@@ -221,15 +217,6 @@ public sealed class LanguageManager
     public IObservable<string?> Status_Disconnected => Text(nameof(Status_Disconnected));
     public IObservable<string?> Status_Identifying => Text(nameof(Status_Identifying));
     public IObservable<string?> Status_Unidentified => Text(nameof(Status_Unidentified));
-    public IObservable<string?> Toast_NewVersion => Text(nameof(Toast_NewVersion));
-    public IObservable<string?> Toast_VersionLabel => Text(nameof(Toast_VersionLabel));
-    public IObservable<string?> Update_ConnectFailed => Text(nameof(Update_ConnectFailed));
-    public IObservable<string?> Update_MessageNoContent => Text(nameof(Update_MessageNoContent));
-    public IObservable<string?> Update_MessageWithContent => Text(nameof(Update_MessageWithContent));
-    public IObservable<string?> Update_NetworkError => Text(nameof(Update_NetworkError));
-    public IObservable<string?> Update_ParseError => Text(nameof(Update_ParseError));
-    public IObservable<string?> Update_Timeout => Text(nameof(Update_Timeout));
-    public IObservable<string?> Update_UpToDate => Text(nameof(Update_UpToDate));
 
     private static bool TryCreateCulture(string name, out CultureInfo culture)
     {

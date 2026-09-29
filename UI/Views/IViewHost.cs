@@ -46,8 +46,8 @@ public interface IViewHost
     void RefreshBackground();
 
     // ---- 设置页外壳级能力 ----
-    /// <summary>执行手动检查更新（外壳持有更新协调器与结果对话框）。</summary>
-    Task CheckForUpdatesAsync();
+    /// <summary>打开 GitHub Releases 发布页（不联网检测版本，直接跳转由用户自行下载）。</summary>
+    Task OpenUpdatePageAsync();
     /// <summary>打开反馈对话框并导出日志到桌面。</summary>
     Task OpenFeedbackAsync();
     /// <summary>请求外壳重建侧栏多设备列表并刷新「恢复隐藏设备」按钮。</summary>

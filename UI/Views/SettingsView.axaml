@@ -45,7 +45,6 @@
     <StackPanel Spacing="6">
      <CheckBox x:Name="CbAuto" Content="{l10n:Translate Settings_AutoStart}"/>
      <CheckBox x:Name="CbTray" Content="{l10n:Translate Settings_CloseToTray}"/>
-     <CheckBox x:Name="CbAutoUpdate" Content="{l10n:Translate Settings_AutoUpdate}"/>
     </StackPanel>
    </StackPanel>
   </Border>
@@ -57,7 +56,7 @@
     <TextBlock Text="{l10n:Translate Settings_Tools}" FontSize="14"
        Foreground="{DynamicResource SukiText}" Opacity="0.8"/>
     <WrapPanel Orientation="Horizontal" Margin="0,0,0,-8">
-     <Button x:Name="BtnCheckUpdate" Content="{l10n:Translate Settings_CheckUpdate}"
+     <Button x:Name="BtnCheckUpdate" Content="{l10n:Translate Settings_GetUpdate}"
          Height="32" FontSize="13" Padding="16,0" Margin="0,0,8,8"
          Click="BtnCheckUpdate_Click" Classes="TextPanelButton"/>
      <Button x:Name="BtnFeedback" Content="{l10n:Translate Settings_Feedback}"

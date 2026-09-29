@@ -20,7 +20,6 @@ public sealed class SettingsStore
             "ConnectionToast" => _settings?.Current.ConnectionToastEnabled ?? fallback,
             "TrayEnabled" => _settings?.Current.MinimizeToTray ?? fallback,
             "AutoStart" => _settings?.Current.StartWithWindows ?? fallback,
-            "AutoCheckUpdate" => _settings?.Current.AutomaticUpdateChecks ?? fallback,
             _ => fallback
         };
 
@@ -115,7 +114,6 @@ public sealed class SettingsStore
             "LowBatteryToast" => settings with { LowBatteryToastEnabled = value },
             "ConnectionToast" => settings with { ConnectionToastEnabled = value },
             "TrayEnabled" => settings with { MinimizeToTray = value },
-            "AutoCheckUpdate" => settings with { AutomaticUpdateChecks = value },
             _ => settings
         });
     }

@@ -37,13 +37,9 @@ public partial class SettingsView : PageView
         // 开关初始化（页面本地设置）
         CbTray.IsChecked = UiSettings.GetBool("TrayEnabled", false);
         CbAuto.IsChecked = UiSettings.GetBool("AutoStart", false);
-        // 用 SetString/GetString 避免 SetBool(false) 删除条目导致默认值恢复
-        var autoUpdate = UiSettings.GetBool("AutoCheckUpdate", true) ? "true" : "false";
-        CbAutoUpdate.IsChecked = autoUpdate != "false";
         // 接线（按钮 Click 由 XAML 自动绑定）
         CbTray.IsCheckedChanged += CbTray_Changed;
         CbAuto.IsCheckedChanged += CbAuto_Changed;
-        CbAutoUpdate.IsCheckedChanged += CbAutoUpdate_Changed;
         CbPriorityDevice.SelectionChanged += CbPriorityDevice_Changed;
     }
     public override void ApplySnapshot(BusinessSnapshot snapshot)
@@ -70,24 +66,12 @@ public partial class SettingsView : PageView
         UiSettings.SetBool("AutoStart", on);
         Log?.Debug("UI", $"设置: 开机自启 -> {on}");
     }
-    private void CbAutoUpdate_Changed(object? s, RoutedEventArgs e)
-    {
-        var on = CbAutoUpdate.IsChecked == true;
-        UiSettings.SetBool("AutoCheckUpdate", on);
-        Log?.Debug("UI", $"设置: 自动检查更新 -> {on}");
-    }
     // ====== 工具按钮 ======
+    // 不再联网检测版本：直接用默认浏览器打开 GitHub Releases 页面。
     private async void BtnCheckUpdate_Click(object? s, RoutedEventArgs e)
     {
-        Log?.Debug("UI", "用户操作: 手动检查更新");
-        BtnCheckUpdate.IsEnabled = false;
-        BtnCheckUpdate.Content = LanguageManager.Instance.GetString(LanguageManager.Instance.Settings_Checking);
-        try { if (Host is not null) await Host.CheckForUpdatesAsync(); }
-        finally
-        {
-            BtnCheckUpdate.IsEnabled = true;
-            BtnCheckUpdate.Content = LanguageManager.Instance.GetString(LanguageManager.Instance.Settings_CheckUpdate);
-        }
+        try { if (Host is not null) await Host.OpenUpdatePageAsync(); }
+        finally { BtnCheckUpdate.IsEnabled = true; }
     }
     private void BtnFeedback_Click(object? s, RoutedEventArgs e)
         => _ = Host?.OpenFeedbackAsync();

@@ -2,6 +2,9 @@
 
 [中文](https://github.com/Zhaoyi-ya/OppoPodsManager/blob/main/README.md) | [English](https://github.com/Zhaoyi-ya/OppoPodsManager/blob/main/README_EN.md)
 
+> **📦 Project archived**: This repository is no longer developed or maintained as of 2026-09-30.
+> The existing code is archived as is for anyone to read. See the [archive notice](ARCHIVE_EN.md) for details.
+
 ---
 
 Manage your Bluetooth earbuds right from your desktop — check battery, switch noise cancelling, tune EQ,
@@ -127,7 +130,7 @@ Main window, top to bottom:
 | **Features** | Spatial sound, game mode, game sound, dual-device toggles + Master EQ dropdown (all shown per model, state read back live) |
 
 **Settings page**: local device info (name / firmware / codec), connection strategy (auto-select, priority device),
-minimize-to-tray, auto-start, check for updates, view logs, feedback, about.
+minimize-to-tray, auto-start, get update, view logs, feedback, about.
 
 ---
 
@@ -148,14 +151,13 @@ minimize-to-tray, auto-start, check for updates, view logs, feedback, about.
 
 ## Network Connection
 
-The only network activity in this app is **update checking**: it queries the update server for the latest
-version number to see if a new release is available.
+This app **makes no network requests of its own**: there is no version check and no update-server query.
 
 - **No data is uploaded**: it does not collect or upload any device info, earbud data, usage habits, or any personal information.
-- It only makes a single read-only version query when you check for updates (manually or via auto-check) — no other network communication occurs.
+- The "Get Update" button in Settings simply opens the GitHub Releases page in your default browser (the request is made by the browser, not by the app); the app never compares versions in the background.
 - No analytics, tracking, or telemetry code is built in.
 
-If the network is unavailable, or you disable auto-check, the app runs fully offline — every local feature keeps working.
+The app runs fully offline — every local feature keeps working.
 
 ---
 

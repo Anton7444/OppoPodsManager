@@ -32,7 +32,6 @@ using OppoPodsManager.Control.Core.Models;
 using NoiseOptionModel = OppoPodsManager.Control.Core.Features.NoiseOptionModel;
 using MultiDeviceOperation = OppoPodsManager.Control.Core.Features.MultiDeviceOperation;
 using MultiDeviceDisplayState = OppoPodsManager.Control.Core.Features.MultiDeviceDisplayState;
-using OppoPodsManager.Control.Subsystems.Updates;
 using BackgroundImageManager = OppoPodsManager.Assets.VisualAssets.BackgroundImageManager;
 using BackgroundSelectionService = OppoPodsManager.Assets.VisualAssets.BackgroundSelectionService;
 using DeviceProfileLoader = OppoPodsManager.Assets.Localization.DeviceProfileLoader;
@@ -126,8 +125,6 @@ public partial class MainWindow : SukiWindow, IViewHost
     // 当前用户选择的主题模式：0=系统(跟随) 1=深色 2=浅色。用于决定是否跟随系统自动切换。
     private int _currentThemeIndex;
     private readonly List<IDisposable> _linguaSubs = new();
-    // 复用控制层更新协调器，窗口只负责更新结果的显示和用户操作。
-    private readonly UpdateCoordinator? _updateCoordinator;
     private readonly DesktopLinkService? _desktopLinks;
     private readonly FeedbackExportService? _feedbackExporter;
     private readonly Action? _requestApplicationExit;
@@ -148,7 +145,6 @@ public partial class MainWindow : SukiWindow, IViewHost
         OppoPodsManager.Assets.UserSettings.SettingsManager? nextSettings,
         ModelCatalog? modelCatalog = null,
         CommandDispatcher? commandDispatcher = null,
-        UpdateCoordinator? updateCoordinator = null,
         DesktopLinkService? desktopLinks = null,
         FeedbackExportService? feedbackExporter = null,
         Action? requestApplicationExit = null,
@@ -157,8 +153,6 @@ public partial class MainWindow : SukiWindow, IViewHost
     {
         // 窗口只保存应用层注入的调度器，不在 UI 内部创建控制逻辑。
         _commandDispatcher = commandDispatcher;
-        // 更新协调器由应用生命周期注入；AOT 无参构造只负责加载视图资源。
-        _updateCoordinator = updateCoordinator;
         _desktopLinks = desktopLinks;
         _feedbackExporter = feedbackExporter;
         _requestApplicationExit = requestApplicationExit;
@@ -244,13 +238,12 @@ public partial class MainWindow : SukiWindow, IViewHost
         OppoPodsManager.Assets.UserSettings.SettingsManager settings,
         ApplicationLog log,
         CommandDispatcher commandDispatcher,
-        UpdateCoordinator? updateCoordinator = null,
         DesktopLinkService? desktopLinks = null,
         FeedbackExportService? feedbackExporter = null,
         Action? requestApplicationExit = null,
         Func<bool>? shouldKeepWindowAlive = null,
         Action? requestWindowReload = null)
-        : this(settings, modelCatalog, commandDispatcher, updateCoordinator, desktopLinks, feedbackExporter, requestApplicationExit, shouldKeepWindowAlive, requestWindowReload)
+        : this(settings, modelCatalog, commandDispatcher, desktopLinks, feedbackExporter, requestApplicationExit, shouldKeepWindowAlive, requestWindowReload)
     {
         _frontendState = frontendState;
         _controlManager = controlManager;
@@ -318,7 +311,6 @@ public partial class MainWindow : SukiWindow, IViewHost
     // ---- 浮层对话框 ----
     private TaskCompletionSource<string?>? _promptTcs;
     private TaskCompletionSource<bool>? _confirmTcs;
-    private string _updatePendingVersion = ""; // 当前提示的新版本号，供跳过使用
 
     // ---- 耳机预览 ----
     private readonly Dictionary<EarphoneSlot, Image> _earphonePreviews = new();
@@ -401,7 +393,7 @@ public partial class MainWindow : SukiWindow, IViewHost
     }
 
     // ---- 设置页外壳级能力 ----
-    Task IViewHost.CheckForUpdatesAsync() => DoCheckUpdateAsync(silent: false);
+    Task IViewHost.OpenUpdatePageAsync() => OpenUpdatePageAsync();
     Task IViewHost.OpenFeedbackAsync() => ShowFeedbackDialogAsync();
     void IViewHost.ResyncMultiDeviceList() => SyncNextMultiDeviceList(_frontendState?.Snapshot);
     void IViewHost.SetEqControlsEnabled(bool enabled) => EqView?.SetControlsEnabled(enabled);

@@ -21,7 +21,6 @@ using OppoPodsManager.UI.Tray;
 using OppoPodsManager.Assets.UserSettings;
 using OppoPodsManager.Assets.Oplus;
 using OppoPodsManager.Control.Subsystems.Logging;
-using OppoPodsManager.Control.Subsystems.Updates;
 using OppoPodsManager.Assets.Localization;
 
 namespace OppoPodsManager;
@@ -38,7 +37,6 @@ public sealed partial class App : Application
     private ApplicationLog? _log;
     private CommandDispatcher? _commandDispatcher;
     private NotificationCoordinator? _notificationCoordinator;
-    private UpdateCoordinator? _updateCoordinator;
     private DesktopLinkService? _desktopLinks;
     private FeedbackExportService? _feedbackExporter;
     private CancellationTokenSource? _startupCancellation;
@@ -87,7 +85,6 @@ public sealed partial class App : Application
             _commandDispatcher = new CommandDispatcher(_controlManager, _log);
             // 由控制层统一判断连接和低电量通知，界面层只负责渲染通知请求。
             _notificationCoordinator = new NotificationCoordinator(_frontendState);
-            _updateCoordinator = new UpdateCoordinator(_settings);
             _toastNotifications = new ToastNotificationService(_notificationCoordinator, _settings);
             _startupCancellation = new CancellationTokenSource();
             _mainWindow = CreateMainWindow();
@@ -114,8 +111,6 @@ public sealed partial class App : Application
                 await _windowMemoryReclaimTask;
                 if (_controlManager is not null)
                     await _controlManager.DisposeAsync();
-                _updateCoordinator?.Dispose();
-                _updateCoordinator = null;
                 _desktopLinks = null;
                 _feedbackExporter = null;
             _log?.Dispose();
@@ -162,7 +157,6 @@ public sealed partial class App : Application
             _settings ?? throw new InvalidOperationException("设置管理器尚未初始化。"),
             _log ?? throw new InvalidOperationException("日志服务尚未初始化。"),
             _commandDispatcher ?? throw new InvalidOperationException("命令调度器尚未初始化。"),
-            _updateCoordinator,
             _desktopLinks,
             _feedbackExporter,
             RequestApplicationExit,
