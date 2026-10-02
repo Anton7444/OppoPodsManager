@@ -150,7 +150,7 @@
     <TextBlock x:Name="FeaturePlaceholderText" Text="{l10n:Translate Feature_Placeholder}" FontSize="13"
      HorizontalAlignment="Center" Opacity="0.45" Foreground="{DynamicResource SukiText}"/>
     <StackPanel x:Name="FeatureContentPanel" IsVisible="False" Spacing="4">
-     <UniformGrid Columns="2" HorizontalAlignment="Stretch">
+     <UniformGrid Columns="1" HorizontalAlignment="Stretch">
       <CheckBox x:Name="CbDualDevice" Tag="dual-device" Content="{l10n:Translate Feature_DualDevice}"
        Margin="2,2" FontSize="12" IsCheckedChanged="FeatureCheck_Changed"/>
       <CheckBox x:Name="CbGame" Tag="game-mode" Content="{l10n:Translate Feature_GameMode}"
