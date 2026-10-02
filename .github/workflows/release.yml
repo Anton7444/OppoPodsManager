@@ -4,6 +4,10 @@ on:
   push:
     tags: ['v*']
   workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag (created if missing)
+        default: v2.0.1
 
 permissions:
   contents: write
@@ -28,7 +32,9 @@ jobs:
       - name: Create release
         uses: softprops/action-gh-release@v2
         with:
-          name: ${{ github.ref_name }}
+          tag_name: ${{ inputs.tag || github.ref_name }}
+          name: ${{ inputs.tag || github.ref_name }}
+          target_commitish: ${{ github.sha }}
           body: UI fixes
           files: |
             OppoPodsManager-win-x64.zip
