@@ -1,0 +1,29 @@
+name: Smoke test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - name: Publish (NativeAOT, win-x64)
+        run: dotnet publish OppoPodsManager.csproj -c Release -r win-x64 -o publish
+      - name: List output
+        shell: pwsh
+        run: Get-ChildItem publish | Select-Object Name, Length
+      - name: Launch and report
+        shell: pwsh
+        continue-on-error: true
+        run: |
+          $p = Start-Process -FilePath publish\OppoPodsManager.exe -PassThru
+          Start-Sleep -Seconds 15
+          if ($p.HasExited) { "EXITED early, code $($p.ExitCode)" } else { "STILL RUNNING"; Stop-Process $p -Force }
+          $d = "$env:LOCALAPPDATA\OppoPodsManager"
+          if (Test-Path $d) { Get-ChildItem $d -Recurse | Select-Object FullName }
+          Get-ChildItem $d -Recurse -Include *.log,startup-crash.txt -ErrorAction SilentlyContinue | ForEach-Object { "=== $($_.FullName)"; Get-Content $_.FullName -Tail 80 }
+          Get-WinEvent -FilterHashtable @{LogName='Application'; ProviderName='.NET Runtime','Application Error'} -MaxEvents 5 -ErrorAction SilentlyContinue | Format-List TimeCreated, Message
