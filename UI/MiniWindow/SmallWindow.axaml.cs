@@ -647,7 +647,7 @@ public partial class SmallWindow : SukiWindow
             CornerRadius = new CornerRadius(9),
             Background = AppPalette.BrushCircleStrokeInactive,
             Padding = new Thickness(2),
-            HorizontalAlignment = HorizontalAlignment.Center
+            HorizontalAlignment = HorizontalAlignment.Stretch
         };
         var segmentGrid = new UniformGrid { Columns = Math.Max(1, _ancOptions.Count) };
         capsule.Child = segmentGrid;
@@ -666,7 +666,7 @@ public partial class SmallWindow : SukiWindow
             foreach (var child in opt.Children) _ancChildToMain[child.Key] = opt.Key;
         }
 
-        AncMainRow.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Auto));
+        AncMainRow.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
         AncMainRow.Children.Add(capsule);
     }
 
@@ -760,6 +760,7 @@ public partial class SmallWindow : SukiWindow
             FontSize = labelText.Length > 8 ? Math.Max(10, fontSize - 2) : fontSize,
             Foreground = AppPalette.BrushGray,
             TextAlignment = TextAlignment.Center,
+            TextTrimming = TextTrimming.CharacterEllipsis,
             VerticalAlignment = VerticalAlignment.Center
         };
 
@@ -777,7 +778,7 @@ public partial class SmallWindow : SukiWindow
         {
             Content = content, Tag = opt,
             Background = Brushes.Transparent, BorderThickness = new Thickness(0),
-            Padding = new Thickness(12, 0), Height = height, Focusable = false,
+            Padding = new Thickness(4, 0), Height = height, Focusable = false,
             Cursor = new Cursor(StandardCursorType.Hand),
             Foreground = AppPalette.BrushGray,
             HorizontalContentAlignment = HorizontalAlignment.Center
