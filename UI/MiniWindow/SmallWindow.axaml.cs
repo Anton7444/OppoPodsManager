@@ -738,7 +738,7 @@ public partial class SmallWindow : SukiWindow
         {
             var t = DeviceProfileLoader.AncLabel(key);
             label.Text = t;
-            label.FontSize = t.Length > 8 ? 11 : 13;
+            label.FontSize = 11;
         }
         foreach (var (key, (btn, _)) in _ancSubButtons)
             btn.Content = DeviceProfileLoader.AncLabel(key);
@@ -757,17 +757,17 @@ public partial class SmallWindow : SukiWindow
         var label = new TextBlock
         {
             Text = labelText,
-            FontSize = labelText.Length > 8 ? Math.Max(10, fontSize - 2) : fontSize,
+            FontSize = Math.Max(10, fontSize - 2),
             Foreground = AppPalette.BrushGray,
             TextAlignment = TextAlignment.Center,
-            TextTrimming = TextTrimming.CharacterEllipsis,
+            TextWrapping = TextWrapping.Wrap,
             VerticalAlignment = VerticalAlignment.Center
         };
 
         var content = new StackPanel
         {
-            Orientation = Orientation.Horizontal,
-            Spacing = 4,
+            Orientation = Orientation.Vertical,
+            Spacing = 2,
             HorizontalAlignment = HorizontalAlignment.Center,
             VerticalAlignment = VerticalAlignment.Center
         };
@@ -778,7 +778,7 @@ public partial class SmallWindow : SukiWindow
         {
             Content = content, Tag = opt,
             Background = Brushes.Transparent, BorderThickness = new Thickness(0),
-            Padding = new Thickness(4, 0), Height = height, Focusable = false,
+            Padding = new Thickness(4, 4), MinHeight = height + 14, Focusable = false,
             Cursor = new Cursor(StandardCursorType.Hand),
             Foreground = AppPalette.BrushGray,
             HorizontalContentAlignment = HorizontalAlignment.Center

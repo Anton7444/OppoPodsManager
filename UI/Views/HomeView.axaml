@@ -100,7 +100,7 @@
      <TextBlock x:Name="FeaturePlaceholderText" Text="{l10n:Translate Feature_Placeholder}" FontSize="13"
         HorizontalAlignment="Center" Opacity="0.45" Foreground="{DynamicResource SukiText}" IsVisible="True"/>
      <StackPanel x:Name="FeatureContentPanel" IsVisible="False">
-      <UniformGrid Columns="2" HorizontalAlignment="Stretch" Margin="0,0,0,6">
+      <UniformGrid Columns="1" HorizontalAlignment="Stretch" Margin="0,0,0,6">
        <CheckBox x:Name="CbDualDevice" Content="{l10n:Translate Feature_DualDevice}" Margin="0,3"/>
        <CheckBox x:Name="CbGame" Content="{l10n:Translate Feature_GameMode}" Margin="0,3"/>
        <CheckBox x:Name="CbLongPower" Content="{l10n:Translate Feature_LongPowerMode}" Margin="0,3"/>
